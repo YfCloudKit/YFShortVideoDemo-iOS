@@ -16,9 +16,11 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
-*.a
-*.bundle
+ffmpeg/
+bundles/
 *.framework
+441k/
+
 
 ## Other
 *.moved-aside
