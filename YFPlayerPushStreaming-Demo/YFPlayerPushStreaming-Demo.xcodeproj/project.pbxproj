@@ -78,7 +78,7 @@
 		1881D85A1F30B9EE00487CC1 /* YFDrawButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881D8591F30B9EE00487CC1 /* YFDrawButton.m */; };
 		1886CAA91F5E53AD0069A513 /* YfMediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1886CAA81F5E53AD0069A513 /* YfMediaPlayer.framework */; };
 		189C7EE91ECDE7C000DBBEB4 /* YFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C7EE81ECDE7C000DBBEB4 /* YFProgressView.m */; };
-		18A48AA01F67BCC200BBFEBC /* YFMediaPlayerPushStreaming.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A48A9F1F67BCC200BBFEBC /* YFMediaPlayerPushStreaming.framework */; };
+		18A48ABC1F692C1C00BBFEBC /* YFMediaPlayerPushStreaming.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A48ABB1F692C1C00BBFEBC /* YFMediaPlayerPushStreaming.framework */; };
 		18A51B811EA0B4DE001E737A /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A51B801EA0B4DE001E737A /* icon.png */; };
 		18BABB381F1B2D7400A98C8B /* YFRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BABB371F1B2D7400A98C8B /* YFRange.m */; };
 		18BE69F91E90D93200ED5EC8 /* YFFuncView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE69F81E90D93200ED5EC8 /* YFFuncView.m */; };
@@ -298,7 +298,7 @@
 		18A091381EFCBFE30088AD02 /* libavtools.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavtools.a; path = ../ffmpeg/lib/libavtools.a; sourceTree = "<group>"; };
 		18A0915A1EFD0DCB0088AD02 /* libfdk-aac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libfdk-aac.a"; path = "../ffmpeg/lib/libfdk-aac.a"; sourceTree = "<group>"; };
 		18A0915B1EFD0DCB0088AD02 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libx264.a; path = ../ffmpeg/lib/libx264.a; sourceTree = "<group>"; };
-		18A48A9F1F67BCC200BBFEBC /* YFMediaPlayerPushStreaming.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YFMediaPlayerPushStreaming.framework; sourceTree = "<group>"; };
+		18A48ABB1F692C1C00BBFEBC /* YFMediaPlayerPushStreaming.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YFMediaPlayerPushStreaming.framework; sourceTree = "<group>"; };
 		18A51B801EA0B4DE001E737A /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		18BABB361F1B2D7400A98C8B /* YFRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFRange.h; sourceTree = "<group>"; };
 		18BABB371F1B2D7400A98C8B /* YFRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFRange.m; sourceTree = "<group>"; };
@@ -439,7 +439,7 @@
 			files = (
 				184CCCD61EAB3A1200880C76 /* ImageIO.framework in Frameworks */,
 				187213481EA6FEA7000E65EB /* MobileCoreServices.framework in Frameworks */,
-				18A48AA01F67BCC200BBFEBC /* YFMediaPlayerPushStreaming.framework in Frameworks */,
+				18A48ABC1F692C1C00BBFEBC /* YFMediaPlayerPushStreaming.framework in Frameworks */,
 				494444471E974189000A83B9 /* AssetsLibrary.framework in Frameworks */,
 				18C29D351E6673FD0082BEAF /* CoreMotion.framework in Frameworks */,
 				183A59691E5D8B0D0021CAD9 /* Accelerate.framework in Frameworks */,
@@ -542,9 +542,9 @@
 		0A9297AD1C0C5716000BA31A = {
 			isa = PBXGroup;
 			children = (
+				18A48ABB1F692C1C00BBFEBC /* YFMediaPlayerPushStreaming.framework */,
 				1886CAA81F5E53AD0069A513 /* YfMediaPlayer.framework */,
 				1840A4C61F590DF000AE00DF /* libSdkAuthFrameWork.a */,
-				18A48A9F1F67BCC200BBFEBC /* YFMediaPlayerPushStreaming.framework */,
 				18CBE0411F1DA95F00222FE9 /* YFDataSource.bundle */,
 				18D8A2701E31FB1200E21B23 /* bundles */,
 				0A08EC6F1C143656000CF0C3 /* Frameworks */,
