@@ -22,7 +22,7 @@
     
     //鉴权需在确定有网的条件下进行
     [YfLisenceManger LisenceWithAK:"65592eeddc3d646db903a7367d58792268804f09" Token:"9e7299afc12d793a23d913d88be6fa6383f5876e" YfAuthResult:^(int flag, NSString *description) {
-        NSLog(@"%d=%@",flag,description);
+        NSLog(@"RRRRRR%d=%@",flag,description);
     }];
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];

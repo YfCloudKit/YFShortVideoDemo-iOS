@@ -218,7 +218,7 @@
         path = [path stringByAppendingPathComponent:@"musicMux.mp4"];
         NSURL *url = [NSURL URLWithString:path];
         
-        _mediaPlayer = [[YfFFMoviePlayerController alloc] initWithContentURL:url withOptions:nil useDns:YES useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0 display:YES];
+        _mediaPlayer = [[YfFFMoviePlayerController alloc] initWithContentURL:url withOptions:nil useDns:YES useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0 display:YES isOpenSoundTouch:YES];
         [_mediaPlayer prepareToPlay];
         _mediaPlayer.delegate = self;
         _mediaPlayer.shouldAutoplay = NO;

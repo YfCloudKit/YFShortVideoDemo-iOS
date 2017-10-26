@@ -151,7 +151,7 @@ struct timeval record;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [XXManager sharedManager].open = YES;
+    [YfMFaceUSession sharedManager].open = YES;
     self.view.backgroundColor = [UIColor blackColor];
     self.configManager.UseAble = NO;
     self.uploadCount = 5;
@@ -232,7 +232,7 @@ struct timeval record;
         [self saveConfigVideo:nil];
     }
     
-    [XXManager sharedManager].isOnlyBeauty = YES;
+    [YfMFaceUSession sharedManager].isOnlyBeauty = YES;
     self.isPlayEnd = YES;
 //    self.mediaPlayer.currentPlaybackTime = 0;
 //    [self.mediaPlayer play];
@@ -477,6 +477,8 @@ struct timeval record;
 - (void)getDisplayLink{
     [self.displayLink invalidate];
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayProgress)];
+    self.displayLink.frameInterval = 3;
+    
     [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 }
 
@@ -574,7 +576,7 @@ struct timeval record;
     [self.fileProcess clean];
     self.fileProcess = nil;
     
-    [XXManager sharedManager].open = NO;
+    [YfMFaceUSession sharedManager].open = NO;
     
     if (_editPreview) {
         [_editPreview resetConfigure];
@@ -1402,7 +1404,7 @@ struct timeval record;
             [weakSelf addStartConfig];
             if([theme isEqualToString:@"🐔"]){
                 NSString *file = [[NSBundle mainBundle] pathForResource:@"0001" ofType:@"gif"];
-                [weakSelf.editPreview decodeAndRenderWithFilePath:file];
+                [weakSelf.editPreview decodeAndRenderWithFilePath:file PointRect:CGRectMake(10, 10, 80, 80)];
                 
                 weakSelf.funcType = ActionAmazingFilter;
                 weakSelf.soulType = Gif;
@@ -1410,7 +1412,7 @@ struct timeval record;
                 weakSelf.paintView.myColor = [UIColor redColor];
             }else if([theme isEqualToString:@"🐿"]){
                 NSString *file = [[NSBundle mainBundle] pathForResource:@"0002" ofType:@"gif"];
-                [weakSelf.editPreview decodeAndRenderWithFilePath:file];
+                [weakSelf.editPreview decodeAndRenderWithFilePath:file PointRect:CGRectMake(10, 10, 80, 80)];
                 
                 weakSelf.funcType = ActionAmazingFilter;
                 weakSelf.soulType = Gif;
@@ -1418,7 +1420,7 @@ struct timeval record;
                 weakSelf.paintView.myColor = [UIColor blueColor];
             }else if([theme isEqualToString:@"🐶"]){
                 NSString *file = [[NSBundle mainBundle] pathForResource:@"0003" ofType:@"gif"];
-                [weakSelf.editPreview decodeAndRenderWithFilePath:file];
+                [weakSelf.editPreview decodeAndRenderWithFilePath:file PointRect:CGRectMake(10, 10, 80, 80)];
                 
                 weakSelf.funcType = ActionAmazingFilter;
                 weakSelf.soulType = Gif;
@@ -1426,7 +1428,7 @@ struct timeval record;
                 weakSelf.paintView.myColor = [UIColor whiteColor];
             }else if([theme isEqualToString:@"🍉"]){
                 NSString *file = [[NSBundle mainBundle] pathForResource:@"0004" ofType:@"gif"];
-                [weakSelf.editPreview decodeAndRenderWithFilePath:file];
+                [weakSelf.editPreview decodeAndRenderWithFilePath:file PointRect:CGRectMake(10, 10, 80, 80)];
                 
                 weakSelf.funcType = ActionAmazingFilter;
                 weakSelf.soulType = Gif;
@@ -1846,7 +1848,7 @@ struct timeval record;
         //播放剪切后的视频
         NSURL *url = [NSURL fileURLWithPath:[[self getDocumentsPath] stringByAppendingString:@"/splitVideo.mp4"]];
         
-        _mediaPlayer = [[YfFFMoviePlayerController alloc] initWithContentURL:url withOptions:nil useDns:YES useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0 display:YES];
+        _mediaPlayer = [[YfFFMoviePlayerController alloc] initWithContentURL:url withOptions:nil useDns:YES useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0 display:YES isOpenSoundTouch:YES];
         
         self.playURL = [[self getDocumentsPath] stringByAppendingString:@"/splitVideo.mp4"];
         _mediaPlayer.delegate = self;

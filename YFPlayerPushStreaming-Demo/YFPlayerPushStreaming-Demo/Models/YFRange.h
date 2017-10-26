@@ -42,7 +42,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSString *texTureName;
 //@property (nonatomic, assign) NSInteger state;//1-loc,2-end,0-loc&end
 
-
 + (instancetype)rangeWithLoc:(CGFloat)loc end:(CGFloat)end type:(Type)type;
 
 @end
