@@ -10,6 +10,8 @@
 #import "Masonry.h"
 #import "UIImage+Gif.h"
 #import "YFMusicShakeSetViewController.h"
+#import "YFDefine.h"
+
 @interface YFParamSetViewController ()
 
 @property (nonatomic, strong) UIView *grayView;
@@ -38,7 +40,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.automaticallyAdjustsScrollViewInsets = YES;
+//    self.automaticallyAdjustsScrollViewInsets = YES;
     UIButton *title = [[UIButton alloc] init];
     [title setTitle:@"设置参数" forState:UIControlStateNormal];
     [title setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -59,7 +61,7 @@
     [self.grayView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view);
         make.right.equalTo(weakSelf.view);
-        make.top.equalTo(weakSelf.view).offset(64);
+        make.top.equalTo(weakSelf.view).offset(SafeAreaTopHeight);
         make.height.mas_equalTo(1);
     }];
     
@@ -96,7 +98,7 @@
     [self.grayView2 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view);
         make.right.equalTo(weakSelf.view);
-        make.top.equalTo(weakSelf.view).offset(64+50);
+        make.top.equalTo(weakSelf.view).offset(SafeAreaTopHeight+50);
         make.height.mas_equalTo(1);
     }];
     
@@ -115,7 +117,7 @@
     [self.grayView3 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view);
         make.right.equalTo(weakSelf.view);
-        make.top.equalTo(weakSelf.view).offset(64+100);
+        make.top.equalTo(weakSelf.view).offset(SafeAreaTopHeight+100);
         make.height.mas_equalTo(1);
     }];
     

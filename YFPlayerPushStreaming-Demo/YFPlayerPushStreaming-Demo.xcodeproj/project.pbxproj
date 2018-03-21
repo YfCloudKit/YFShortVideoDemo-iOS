@@ -36,20 +36,23 @@
 		180F3B0D1F16066000AF43E3 /* YFTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 180F3B0C1F16066000AF43E3 /* YFTouchView.m */; };
 		180F3B281F171E0100AF43E3 /* YFMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 180F3B271F171E0100AF43E3 /* YFMoveView.m */; };
 		180F3B2C1F17555D00AF43E3 /* YFDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 180F3B2B1F17555D00AF43E3 /* YFDisplayView.m */; };
+		181916A52061130300565627 /* YfMediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181916A42061130200565627 /* YfMediaPlayer.framework */; };
+		181916C72061F94400565627 /* YFMediaPlayerPushStreaming.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181916C62061F94300565627 /* YFMediaPlayerPushStreaming.framework */; };
+		18325802202C062F00F1B90C /* libavtools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A091381EFCBFE30088AD02 /* libavtools.a */; };
 		183A59691E5D8B0D0021CAD9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183A59681E5D8B0D0021CAD9 /* Accelerate.framework */; };
-		1840A4BA1F590D9D00AE00DF /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C181C1D55DFC500690DD4 /* libavcodec.a */; };
-		1840A4BB1F590D9D00AE00DF /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C181D1D55DFC500690DD4 /* libavfilter.a */; };
-		1840A4BC1F590D9D00AE00DF /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C181E1D55DFC500690DD4 /* libavformat.a */; };
-		1840A4BD1F590D9D00AE00DF /* libavtools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A091381EFCBFE30088AD02 /* libavtools.a */; };
-		1840A4BE1F590D9D00AE00DF /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C181F1D55DFC500690DD4 /* libavutil.a */; };
-		1840A4BF1F590D9D00AE00DF /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A091251EFBF7330088AD02 /* libcrypto.a */; };
-		1840A4C01F590D9D00AE00DF /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B51E4FA1DB6323200860975 /* libfaac.a */; };
-		1840A4C11F590D9D00AE00DF /* libfdk-aac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A0915A1EFD0DCB0088AD02 /* libfdk-aac.a */; };
-		1840A4C21F590D9D00AE00DF /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A091261EFBF7330088AD02 /* libssl.a */; };
-		1840A4C31F590D9D00AE00DF /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C18201D55DFC500690DD4 /* libswresample.a */; };
-		1840A4C41F590D9D00AE00DF /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C18211D55DFC500690DD4 /* libswscale.a */; };
-		1840A4C51F590D9D00AE00DF /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A0915B1EFD0DCB0088AD02 /* libx264.a */; };
 		1840A4C71F590DF000AE00DF /* libSdkAuthFrameWork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1840A4C61F590DF000AE00DF /* libSdkAuthFrameWork.a */; };
+		184274A520209D8E001E32F5 /* login2.png in Resources */ = {isa = PBXBuildFile; fileRef = 184274A120209D8D001E32F5 /* login2.png */; };
+		184275492021D819001E32F5 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C181C1D55DFC500690DD4 /* libavcodec.a */; };
+		1842754A2021D819001E32F5 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C181D1D55DFC500690DD4 /* libavfilter.a */; };
+		1842754B2021D819001E32F5 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C181E1D55DFC500690DD4 /* libavformat.a */; };
+		1842754D2021D819001E32F5 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C181F1D55DFC500690DD4 /* libavutil.a */; };
+		1842754E2021D819001E32F5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A091251EFBF7330088AD02 /* libcrypto.a */; };
+		1842754F2021D819001E32F5 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B51E4FA1DB6323200860975 /* libfaac.a */; };
+		184275502021D819001E32F5 /* libfdk-aac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A0915A1EFD0DCB0088AD02 /* libfdk-aac.a */; };
+		184275512021D819001E32F5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A091261EFBF7330088AD02 /* libssl.a */; };
+		184275522021D819001E32F5 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C18201D55DFC500690DD4 /* libswresample.a */; };
+		184275532021D819001E32F5 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C18211D55DFC500690DD4 /* libswscale.a */; };
+		184275542021D819001E32F5 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A0915B1EFD0DCB0088AD02 /* libx264.a */; };
 		184CCCD61EAB3A1200880C76 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187213451EA6FE9B000E65EB /* ImageIO.framework */; };
 		186941FB1E8E01D2007B8021 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186941FA1E8E01D2007B8021 /* Assets.xcassets */; };
 		186941FF1E8E0384007B8021 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 186941FE1E8E0384007B8021 /* LaunchScreen.xib */; };
@@ -67,6 +70,7 @@
 		186942A81E8F4F49007B8021 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 186942931E8F4F49007B8021 /* ViewController+MASAdditions.m */; };
 		186942A91E8F4F49007B8021 /* YFDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 186942971E8F4F49007B8021 /* YFDetailView.m */; };
 		187213481EA6FEA7000E65EB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187213471EA6FEA7000E65EB /* MobileCoreServices.framework */; };
+		18770A231FF492B3005CF385 /* YFDataSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18770A221FF492B3005CF385 /* YFDataSource.bundle */; };
 		1881D7FD1F2E281600487CC1 /* YFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881D7FC1F2E281600487CC1 /* YFImageView.m */; };
 		1881D80C1F2EE0B900487CC1 /* YFCategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881D80B1F2EE0B900487CC1 /* YFCategoryView.m */; };
 		1881D8181F2F096400487CC1 /* YFSpecialFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881D8171F2F096400487CC1 /* YFSpecialFilterView.m */; };
@@ -78,6 +82,8 @@
 		1881D85A1F30B9EE00487CC1 /* YFDrawButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881D8591F30B9EE00487CC1 /* YFDrawButton.m */; };
 		189C7EE91ECDE7C000DBBEB4 /* YFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C7EE81ECDE7C000DBBEB4 /* YFProgressView.m */; };
 		18A51B811EA0B4DE001E737A /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A51B801EA0B4DE001E737A /* icon.png */; };
+		18B47ABC20511F3800A16845 /* zly.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B47ABB20511F3800A16845 /* zly.png */; };
+		18B47ABE2051205400A16845 /* zly2.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B47ABD2051205300A16845 /* zly2.png */; };
 		18BABB381F1B2D7400A98C8B /* YFRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BABB371F1B2D7400A98C8B /* YFRange.m */; };
 		18BE69F91E90D93200ED5EC8 /* YFFuncView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE69F81E90D93200ED5EC8 /* YFFuncView.m */; };
 		18BE69FF1E90D9E000ED5EC8 /* YFRecordSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE69FE1E90D9E000ED5EC8 /* YFRecordSettingView.m */; };
@@ -92,7 +98,6 @@
 		18CBDFF91F1C558800222FE9 /* YFPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBDFF81F1C558800222FE9 /* YFPaintView.m */; };
 		18CBDFFC1F1C55FC00222FE9 /* YFBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBDFFB1F1C55FC00222FE9 /* YFBezierPath.m */; };
 		18CBE0381F1CCE0700222FE9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE0371F1CCE0700222FE9 /* MBProgressHUD.m */; };
-		18CBE0421F1DA95F00222FE9 /* YFDataSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18CBE0411F1DA95F00222FE9 /* YFDataSource.bundle */; };
 		18CBE0931F1F46C100222FE9 /* creep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 18CBE08E1F1F46C100222FE9 /* creep.mp3 */; };
 		18CBE0941F1F46C100222FE9 /* dongdongdong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 18CBE08F1F1F46C100222FE9 /* dongdongdong.mp3 */; };
 		18CBE0951F1F46C100222FE9 /* lalala.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 18CBE0901F1F46C100222FE9 /* lalala.mp3 */; };
@@ -102,7 +107,7 @@
 		18CBE10F1F219C8F00222FE9 /* UIImage+Gif.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE10E1F219C8F00222FE9 /* UIImage+Gif.m */; };
 		18CBE1131F21A9F700222FE9 /* water.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18CBE1121F21A9F700222FE9 /* water.gif */; };
 		18CBE13C1F25A3B300222FE9 /* YFMusicShakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE13B1F25A3B300222FE9 /* YFMusicShakeViewController.m */; };
-		18CBE1BC1F2758A100222FE9 /* YFStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE1BB1F2758A100222FE9 /* YFStartViewController.m */; };
+		18CBE1BC1F2758A100222FE9 /* YFStartViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE1BB1F2758A100222FE9 /* YFStartViewController.mm */; };
 		18CBE1C21F2763BA00222FE9 /* YFParamSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE1C11F2763BA00222FE9 /* YFParamSetViewController.m */; };
 		18CBE1E51F29F59300222FE9 /* YFUploadProcessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE1E41F29F59200222FE9 /* YFUploadProcessView.m */; };
 		18CBE2431F2B64BF00222FE9 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE2371F2B64BF00222FE9 /* AFHTTPSessionManager.m */; };
@@ -164,9 +169,6 @@
 		18D8A2941E31FB1200E21B23 /* PrincessCrown.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18D8A2821E31FB1200E21B23 /* PrincessCrown.bundle */; };
 		18D8A2951E31FB1200E21B23 /* tiara.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18D8A2831E31FB1200E21B23 /* tiara.bundle */; };
 		18D8A2971E31FB1200E21B23 /* YellowEar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18D8A2851E31FB1200E21B23 /* YellowEar.bundle */; };
-		18DDB1D41FA0891400116C0C /* YfMCameraMetalItools.metallib in Resources */ = {isa = PBXBuildFile; fileRef = 18DDB1D31FA0890D00116C0C /* YfMCameraMetalItools.metallib */; };
-		18DDB1EF1FA1D2CB00116C0C /* YFMediaPlayerPushStreaming.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DDB1EE1FA1D27C00116C0C /* YFMediaPlayerPushStreaming.framework */; };
-		18DDB1FC1FA1D8FE00116C0C /* YfMediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DDB1FB1FA1D8F400116C0C /* YfMediaPlayer.framework */; };
 		18FC617F1E9E415B007CF168 /* shuiyin1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FC617B1E9E415B007CF168 /* shuiyin1.png */; };
 		18FC61801E9E415B007CF168 /* shuiyin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FC617C1E9E415B007CF168 /* shuiyin2.png */; };
 		18FC61811E9E415B007CF168 /* shuiyin3.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FC617D1E9E415B007CF168 /* shuiyin3.png */; };
@@ -174,6 +176,7 @@
 		42C9B4AE1CE96A88001687E1 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C9B4AD1CE96A88001687E1 /* libbz2.tbd */; };
 		42C9B4B01CE96A8D001687E1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C9B4AF1CE96A8D001687E1 /* libz.tbd */; };
 		494444471E974189000A83B9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494444461E974189000A83B9 /* AssetsLibrary.framework */; };
+		498AFC2920032100003A736E /* YfMCameraMetalItools.metallib in Resources */ = {isa = PBXBuildFile; fileRef = 498AFC2820032100003A736E /* YfMCameraMetalItools.metallib */; };
 		5B85D5D21D8EBDFF00184194 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B85D5D11D8EBDFF00184194 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
@@ -239,9 +242,14 @@
 		180F3B271F171E0100AF43E3 /* YFMoveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFMoveView.m; sourceTree = "<group>"; };
 		180F3B2A1F17555D00AF43E3 /* YFDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFDisplayView.h; sourceTree = "<group>"; };
 		180F3B2B1F17555D00AF43E3 /* YFDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFDisplayView.m; sourceTree = "<group>"; };
+		181916A42061130200565627 /* YfMediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YfMediaPlayer.framework; sourceTree = "<group>"; };
+		181916C62061F94300565627 /* YFMediaPlayerPushStreaming.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YFMediaPlayerPushStreaming.framework; sourceTree = "<group>"; };
+		183257D4202AF1D300F1B90C /* YFDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFDefine.h; sourceTree = "<group>"; };
 		183A59681E5D8B0D0021CAD9 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		1840A4531F56C1E500AE00DF /* YfLisenceManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YfLisenceManger.h; sourceTree = "<group>"; };
 		1840A4C61F590DF000AE00DF /* libSdkAuthFrameWork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSdkAuthFrameWork.a; sourceTree = "<group>"; };
+		1842744320203708001E32F5 /* libopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus.a; path = ../ffmpeg/lib/libopus.a; sourceTree = "<group>"; };
+		184274A120209D8D001E32F5 /* login2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login2.png; sourceTree = "<group>"; };
 		186941FA1E8E01D2007B8021 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		186941FE1E8E0384007B8021 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		186942711E8F4F49007B8021 /* YFNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFNavViewController.h; sourceTree = "<group>"; };
@@ -276,6 +284,7 @@
 		186942971E8F4F49007B8021 /* YFDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFDetailView.m; sourceTree = "<group>"; };
 		187213451EA6FE9B000E65EB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		187213471EA6FEA7000E65EB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		18770A221FF492B3005CF385 /* YFDataSource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YFDataSource.bundle; sourceTree = "<group>"; };
 		1881D7FB1F2E281600487CC1 /* YFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFImageView.h; sourceTree = "<group>"; };
 		1881D7FC1F2E281600487CC1 /* YFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFImageView.m; sourceTree = "<group>"; };
 		1881D80A1F2EE0B900487CC1 /* YFCategoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFCategoryView.h; sourceTree = "<group>"; };
@@ -293,12 +302,15 @@
 		189C7EDF1ECDE79E00DBBEB4 /* YFMusicShakeSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFMusicShakeSetViewController.h; sourceTree = "<group>"; };
 		189C7EE71ECDE7C000DBBEB4 /* YFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFProgressView.h; sourceTree = "<group>"; };
 		189C7EE81ECDE7C000DBBEB4 /* YFProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFProgressView.m; sourceTree = "<group>"; };
+		189C7EF11ECE8C0500DBBEB4 /* libnama.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libnama.a; sourceTree = "<group>"; };
 		18A091251EFBF7330088AD02 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../ffmpeg/lib/libcrypto.a; sourceTree = "<group>"; };
 		18A091261EFBF7330088AD02 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../ffmpeg/lib/libssl.a; sourceTree = "<group>"; };
 		18A091381EFCBFE30088AD02 /* libavtools.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavtools.a; path = ../ffmpeg/lib/libavtools.a; sourceTree = "<group>"; };
 		18A0915A1EFD0DCB0088AD02 /* libfdk-aac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libfdk-aac.a"; path = "../ffmpeg/lib/libfdk-aac.a"; sourceTree = "<group>"; };
 		18A0915B1EFD0DCB0088AD02 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libx264.a; path = ../ffmpeg/lib/libx264.a; sourceTree = "<group>"; };
 		18A51B801EA0B4DE001E737A /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		18B47ABB20511F3800A16845 /* zly.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zly.png; sourceTree = "<group>"; };
+		18B47ABD2051205300A16845 /* zly2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zly2.png; sourceTree = "<group>"; };
 		18BABB361F1B2D7400A98C8B /* YFRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFRange.h; sourceTree = "<group>"; };
 		18BABB371F1B2D7400A98C8B /* YFRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFRange.m; sourceTree = "<group>"; };
 		18BE69F71E90D93200ED5EC8 /* YFFuncView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFFuncView.h; sourceTree = "<group>"; };
@@ -324,7 +336,6 @@
 		18CBDFFB1F1C55FC00222FE9 /* YFBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBezierPath.m; sourceTree = "<group>"; };
 		18CBE0361F1CCE0700222FE9 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		18CBE0371F1CCE0700222FE9 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		18CBE0411F1DA95F00222FE9 /* YFDataSource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YFDataSource.bundle; sourceTree = "<group>"; };
 		18CBE08E1F1F46C100222FE9 /* creep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = creep.mp3; sourceTree = "<group>"; };
 		18CBE08F1F1F46C100222FE9 /* dongdongdong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dongdongdong.mp3; sourceTree = "<group>"; };
 		18CBE0901F1F46C100222FE9 /* lalala.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lalala.mp3; sourceTree = "<group>"; };
@@ -336,7 +347,7 @@
 		18CBE1121F21A9F700222FE9 /* water.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = water.gif; sourceTree = "<group>"; };
 		18CBE13B1F25A3B300222FE9 /* YFMusicShakeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFMusicShakeViewController.m; sourceTree = "<group>"; };
 		18CBE1BA1F2758A100222FE9 /* YFStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStartViewController.h; sourceTree = "<group>"; };
-		18CBE1BB1F2758A100222FE9 /* YFStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStartViewController.m; sourceTree = "<group>"; };
+		18CBE1BB1F2758A100222FE9 /* YFStartViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YFStartViewController.mm; sourceTree = "<group>"; };
 		18CBE1C01F2763BA00222FE9 /* YFParamSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFParamSetViewController.h; sourceTree = "<group>"; };
 		18CBE1C11F2763BA00222FE9 /* YFParamSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFParamSetViewController.m; sourceTree = "<group>"; };
 		18CBE1E31F29F59200222FE9 /* YFUploadProcessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFUploadProcessView.h; sourceTree = "<group>"; };
@@ -411,9 +422,6 @@
 		18D8A2821E31FB1200E21B23 /* PrincessCrown.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = PrincessCrown.bundle; sourceTree = "<group>"; };
 		18D8A2831E31FB1200E21B23 /* tiara.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = tiara.bundle; sourceTree = "<group>"; };
 		18D8A2851E31FB1200E21B23 /* YellowEar.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = YellowEar.bundle; sourceTree = "<group>"; };
-		18DDB1D31FA0890D00116C0C /* YfMCameraMetalItools.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = YfMCameraMetalItools.metallib; sourceTree = "<group>"; };
-		18DDB1EE1FA1D27C00116C0C /* YFMediaPlayerPushStreaming.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YFMediaPlayerPushStreaming.framework; sourceTree = "<group>"; };
-		18DDB1FB1FA1D8F400116C0C /* YfMediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YfMediaPlayer.framework; sourceTree = "<group>"; };
 		18FC617B1E9E415B007CF168 /* shuiyin1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuiyin1.png; sourceTree = "<group>"; };
 		18FC617C1E9E415B007CF168 /* shuiyin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuiyin2.png; sourceTree = "<group>"; };
 		18FC617D1E9E415B007CF168 /* shuiyin3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuiyin3.png; sourceTree = "<group>"; };
@@ -429,6 +437,7 @@
 		42C9B4AD1CE96A88001687E1 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		42C9B4AF1CE96A8D001687E1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		494444461E974189000A83B9 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		498AFC2820032100003A736E /* YfMCameraMetalItools.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = YfMCameraMetalItools.metallib; sourceTree = "<group>"; };
 		5B85D5D11D8EBDFF00184194 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		817A10B50ADAE5482B8228DC /* Pods-YFPlayerPushStreaming-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFPlayerPushStreaming-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-YFPlayerPushStreaming-Demo/Pods-YFPlayerPushStreaming-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		9E7A5A5BA2E1A99E41858A81 /* Pods_YFPlayerPushStreaming_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YFPlayerPushStreaming_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -439,6 +448,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				184275492021D819001E32F5 /* libavcodec.a in Frameworks */,
+				1842754A2021D819001E32F5 /* libavfilter.a in Frameworks */,
+				181916C72061F94400565627 /* YFMediaPlayerPushStreaming.framework in Frameworks */,
+				181916A52061130300565627 /* YfMediaPlayer.framework in Frameworks */,
+				1842754B2021D819001E32F5 /* libavformat.a in Frameworks */,
+				18325802202C062F00F1B90C /* libavtools.a in Frameworks */,
+				1842754D2021D819001E32F5 /* libavutil.a in Frameworks */,
+				1842754E2021D819001E32F5 /* libcrypto.a in Frameworks */,
+				1842754F2021D819001E32F5 /* libfaac.a in Frameworks */,
+				184275502021D819001E32F5 /* libfdk-aac.a in Frameworks */,
+				184275512021D819001E32F5 /* libssl.a in Frameworks */,
+				184275522021D819001E32F5 /* libswresample.a in Frameworks */,
+				184275532021D819001E32F5 /* libswscale.a in Frameworks */,
+				184275542021D819001E32F5 /* libx264.a in Frameworks */,
 				184CCCD61EAB3A1200880C76 /* ImageIO.framework in Frameworks */,
 				187213481EA6FEA7000E65EB /* MobileCoreServices.framework in Frameworks */,
 				494444471E974189000A83B9 /* AssetsLibrary.framework in Frameworks */,
@@ -446,21 +469,7 @@
 				183A59691E5D8B0D0021CAD9 /* Accelerate.framework in Frameworks */,
 				42C9B4B01CE96A8D001687E1 /* libz.tbd in Frameworks */,
 				42C9B4AE1CE96A88001687E1 /* libbz2.tbd in Frameworks */,
-				1840A4BA1F590D9D00AE00DF /* libavcodec.a in Frameworks */,
-				1840A4BB1F590D9D00AE00DF /* libavfilter.a in Frameworks */,
-				1840A4BC1F590D9D00AE00DF /* libavformat.a in Frameworks */,
-				1840A4BD1F590D9D00AE00DF /* libavtools.a in Frameworks */,
 				1840A4C71F590DF000AE00DF /* libSdkAuthFrameWork.a in Frameworks */,
-				1840A4BE1F590D9D00AE00DF /* libavutil.a in Frameworks */,
-				1840A4BF1F590D9D00AE00DF /* libcrypto.a in Frameworks */,
-				1840A4C01F590D9D00AE00DF /* libfaac.a in Frameworks */,
-				1840A4C11F590D9D00AE00DF /* libfdk-aac.a in Frameworks */,
-				1840A4C21F590D9D00AE00DF /* libssl.a in Frameworks */,
-				1840A4C31F590D9D00AE00DF /* libswresample.a in Frameworks */,
-				18DDB1EF1FA1D2CB00116C0C /* YFMediaPlayerPushStreaming.framework in Frameworks */,
-				18DDB1FC1FA1D8FE00116C0C /* YfMediaPlayer.framework in Frameworks */,
-				1840A4C41F590D9D00AE00DF /* libswscale.a in Frameworks */,
-				1840A4C51F590D9D00AE00DF /* libx264.a in Frameworks */,
 				0AC27A641C144089007DB2C4 /* libc++.dylib in Frameworks */,
 				0AC27A621C144076007DB2C4 /* libstdc++.6.dylib in Frameworks */,
 				5B85D5D21D8EBDFF00184194 /* SystemConfiguration.framework in Frameworks */,
@@ -493,6 +502,7 @@
 		0A08EC6F1C143656000CF0C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1842744320203708001E32F5 /* libopus.a */,
 				18A0915A1EFD0DCB0088AD02 /* libfdk-aac.a */,
 				18A0915B1EFD0DCB0088AD02 /* libx264.a */,
 				18A091381EFCBFE30088AD02 /* libavtools.a */,
@@ -544,11 +554,11 @@
 		0A9297AD1C0C5716000BA31A = {
 			isa = PBXGroup;
 			children = (
-				18DDB1FB1FA1D8F400116C0C /* YfMediaPlayer.framework */,
-				18DDB1EE1FA1D27C00116C0C /* YFMediaPlayerPushStreaming.framework */,
+				181916C62061F94300565627 /* YFMediaPlayerPushStreaming.framework */,
+				181916A42061130200565627 /* YfMediaPlayer.framework */,
 				1840A4C61F590DF000AE00DF /* libSdkAuthFrameWork.a */,
-				18DDB1D31FA0890D00116C0C /* YfMCameraMetalItools.metallib */,
-				18CBE0411F1DA95F00222FE9 /* YFDataSource.bundle */,
+				498AFC2820032100003A736E /* YfMCameraMetalItools.metallib */,
+				18770A221FF492B3005CF385 /* YFDataSource.bundle */,
 				18D8A2701E31FB1200E21B23 /* bundles */,
 				0A08EC6F1C143656000CF0C3 /* Frameworks */,
 				0A9297B81C0C5717000BA31A /* YFPlayerPushStreaming-Demo */,
@@ -568,6 +578,7 @@
 		0A9297B81C0C5717000BA31A /* YFPlayerPushStreaming-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				183257D0202AF1BC00F1B90C /* Other */,
 				18CBE2351F2B64B600222FE9 /* AFNetworking */,
 				18CBE0331F1CCDF200222FE9 /* MBProgressHUD */,
 				1803D13B1F0A61A0005592A9 /* Category */,
@@ -580,6 +591,7 @@
 				1840A4531F56C1E500AE00DF /* YfLisenceManger.h */,
 				0B1E2BFD1EE9B0E30040E00F /* 441k */,
 				18A51B801EA0B4DE001E737A /* icon.png */,
+				184274A120209D8D001E32F5 /* login2.png */,
 				186941FA1E8E01D2007B8021 /* Assets.xcassets */,
 				186941FE1E8E0384007B8021 /* LaunchScreen.xib */,
 				18D0CBFE1F42D37300475D6E /* gif */,
@@ -641,13 +653,21 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
+		183257D0202AF1BC00F1B90C /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				183257D4202AF1D300F1B90C /* YFDefine.h */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		1869426C1E8F4F49007B8021 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				186942711E8F4F49007B8021 /* YFNavViewController.h */,
 				186942721E8F4F49007B8021 /* YFNavViewController.m */,
 				18CBE1BA1F2758A100222FE9 /* YFStartViewController.h */,
-				18CBE1BB1F2758A100222FE9 /* YFStartViewController.m */,
+				18CBE1BB1F2758A100222FE9 /* YFStartViewController.mm */,
 				18CBE1C01F2763BA00222FE9 /* YFParamSetViewController.h */,
 				18CBE1C11F2763BA00222FE9 /* YFParamSetViewController.m */,
 				189C7EDF1ECDE79E00DBBEB4 /* YFMusicShakeSetViewController.h */,
@@ -830,6 +850,7 @@
 		18D8A2701E31FB1200E21B23 /* bundles */ = {
 			isa = PBXGroup;
 			children = (
+				189C7EF11ECE8C0500DBBEB4 /* libnama.a */,
 				188F26DA1E485AFA00AC5E2E /* Heart */,
 				18BE6A4F1E978F6000ED5EC8 /* face_beautification.bundle */,
 				18BE6A501E978F6000ED5EC8 /* v3.bundle */,
@@ -860,6 +881,8 @@
 				18FC617D1E9E415B007CF168 /* shuiyin3.png */,
 				18FC617E1E9E415B007CF168 /* shuiyin4.png */,
 				18D0CBFB1F42D1B400475D6E /* shuiyin5.png */,
+				18B47ABB20511F3800A16845 /* zly.png */,
+				18B47ABD2051205300A16845 /* zly2.png */,
 			);
 			name = waterMark;
 			sourceTree = "<group>";
@@ -934,7 +957,7 @@
 				18D0CCC61F4686B800475D6E /* 当你打开膨胀的薯片袋子.mp3 in Resources */,
 				18D0CC0B1F42D3CB00475D6E /* specialSlow.gif in Resources */,
 				1881D81E1F2F2AB200487CC1 /* 0003.gif in Resources */,
-				18DDB1D41FA0891400116C0C /* YfMCameraMetalItools.metallib in Resources */,
+				18770A231FF492B3005CF385 /* YFDataSource.bundle in Resources */,
 				18CBE2521F2C831D00222FE9 /* 0001.gif in Resources */,
 				18D8A28F1E31FB1200E21B23 /* item0208.bundle in Resources */,
 				18CBE0931F1F46C100222FE9 /* creep.mp3 in Resources */,
@@ -942,6 +965,7 @@
 				18D0CCB71F4686B800475D6E /* DeepDownLow.mp3 in Resources */,
 				18D8A2881E31FB1200E21B23 /* Deer.bundle in Resources */,
 				18D8A28D1E31FB1200E21B23 /* heart.bundle in Resources */,
+				18B47ABE2051205400A16845 /* zly2.png in Resources */,
 				18D0CBFC1F42D1B400475D6E /* shuiyin5.png in Resources */,
 				18D8A2871E31FB1200E21B23 /* ColorCrown.bundle in Resources */,
 				18D0CCB61F4686B800475D6E /* ChooseYoursSeeds.mp3 in Resources */,
@@ -986,11 +1010,12 @@
 				18D0CCBA1F4686B800475D6E /* HulaHoop.mp3 in Resources */,
 				18D8A28C1E31FB1200E21B23 /* hartshorn.bundle in Resources */,
 				18D0CC091F42D3CB00475D6E /* specialNine.gif in Resources */,
+				18B47ABC20511F3800A16845 /* zly.png in Resources */,
 				180D25AA1E4B2F9300492EC7 /* heart_bixin2.bundle in Resources */,
 				18D8A2861E31FB1200E21B23 /* BeagleDog.bundle in Resources */,
 				180D25A71E4B2F9300492EC7 /* heart_aixhuaban.bundle in Resources */,
 				18FC61811E9E415B007CF168 /* shuiyin3.png in Resources */,
-				18CBE0421F1DA95F00222FE9 /* YFDataSource.bundle in Resources */,
+				184274A520209D8E001E32F5 /* login2.png in Resources */,
 				18D0CCBE1F4686B800475D6E /* Mimimi.mp3 in Resources */,
 				18D0CC3B1F4444F900475D6E /* specialShake.gif in Resources */,
 				186941FB1E8E01D2007B8021 /* Assets.xcassets in Resources */,
@@ -1001,6 +1026,7 @@
 				18CBE0941F1F46C100222FE9 /* dongdongdong.mp3 in Resources */,
 				18D0CC071F42D3CB00475D6E /* specialBlackWhite.gif in Resources */,
 				1881D81F1F2F2AB200487CC1 /* 0004.gif in Resources */,
+				498AFC2920032100003A736E /* YfMCameraMetalItools.metallib in Resources */,
 				18FC617F1E9E415B007CF168 /* shuiyin1.png in Resources */,
 				18D8A2901E31FB1200E21B23 /* item0210.bundle in Resources */,
 				18D0CCC21F4686B800475D6E /* Sway.mp3 in Resources */,
@@ -1050,7 +1076,7 @@
 				18BABB381F1B2D7400A98C8B /* YFRange.m in Sources */,
 				18CBE2451F2B64BF00222FE9 /* AFSecurityPolicy.m in Sources */,
 				189C7EE91ECDE7C000DBBEB4 /* YFProgressView.m in Sources */,
-				18CBE1BC1F2758A100222FE9 /* YFStartViewController.m in Sources */,
+				18CBE1BC1F2758A100222FE9 /* YFStartViewController.mm in Sources */,
 				18CBE0381F1CCE0700222FE9 /* MBProgressHUD.m in Sources */,
 				186942A41E8F4F49007B8021 /* MASViewConstraint.m in Sources */,
 				18CBE0991F1F46F800222FE9 /* YFMusicShakeSetViewController.m in Sources */,

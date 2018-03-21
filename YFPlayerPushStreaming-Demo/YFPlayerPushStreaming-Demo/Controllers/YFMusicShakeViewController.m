@@ -20,15 +20,16 @@
 #import <YfMediaPlayer/YfMediaPlayer.h>
 #import "YFSplitViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 #import "YFSplitMusicView.h"
 #import "YFDrawButton.h"
 #import "YFRecordSettingView.h"
 #import "YFInsFilterView.h"
-static int Time = 15;
-#define BOX_BOUNDS CGRectMake(0.0f, 0.0f, 150, 150.0f)
+#import "YFDefine.h"
+#define Time 15
 static const NSString *THCameraAdjustingExposureContext;
-@interface YFMusicShakeViewController ()<YfSessionDelegate,YfFFMoviePlayerControllerDelegate>
+@interface YFMusicShakeViewController ()<YfSessionDelegate,YfFFMoviePlayerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIButton *exitShake;
 
@@ -43,6 +44,7 @@ static const NSString *THCameraAdjustingExposureContext;
 @property(nonatomic,assign) YfSessionState rtmpSessionState;
 @property (nonatomic,strong) CTCallCenter *callCenter;
 @property (nonatomic, strong) NSMutableArray *registeredNotifications;
+//进度条
 @property (nonatomic, strong) NSMutableArray *pathData;
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, assign) CGFloat index;
@@ -53,6 +55,7 @@ static const NSString *THCameraAdjustingExposureContext;
 
 @property (nonatomic, strong) YfFFMoviePlayerController *mediaPlayer;
 @property (nonatomic, assign) CGFloat drawRate;
+//暂停时添加的layer
 @property (nonatomic, strong) NSMutableArray *layerArr;
 
 @property (nonatomic, strong) UIButton *selectBtn;
@@ -78,30 +81,22 @@ static const NSString *THCameraAdjustingExposureContext;
 @property (nonatomic, strong) UILabel *leftLabel;
 @property (nonatomic, strong) UILabel *rightLabel;
 
-@property (nonatomic, strong) NSMutableArray *recordTimeArr;
-
 @property (nonatomic, assign) int saveInterval;
-
-@property (nonatomic, strong) NSMutableArray *thumPathArr;
 
 @property (nonatomic, strong) UILabel *clickLeft;
 @property (nonatomic, strong) UILabel *clickRight;
 
 @property (nonatomic, assign) BOOL isDelete;
-
+//播放器seek的保存位置数组
 @property (nonatomic, strong) NSMutableArray *seekArr;
 
 @property (nonatomic, strong) UILabel *sucessLabel;
 
 @property (nonatomic, assign) BOOL  isLoadSuccess;
 
-@property (nonatomic, assign) CGFloat savePts;
-
 @property (nonatomic, assign) int pauseInterval;
 
 @property (nonatomic, strong) UIButton *testBtn;
-
-@property (nonatomic, strong) NSMutableArray *ptsArray;
 
 @property (nonatomic, assign) int pictureCount;
 
@@ -128,7 +123,9 @@ static const NSString *THCameraAdjustingExposureContext;
 
 @property (nonatomic, strong) UIButton *arBtn;
 @property (strong, nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
-@property (strong, nonatomic) UIView *exposureBox;
+
+@property (nonatomic, strong) UIButton *albumBtn;
+
 @end
 
 @implementation YFMusicShakeViewController
@@ -151,27 +148,12 @@ static const NSString *THCameraAdjustingExposureContext;
     self.screenWidth = [UIScreen mainScreen].bounds.size.width;
     self.registeredNotifications = [[NSMutableArray alloc] init];
     [self registerApplicationObservers];
-    _focusBox = [self viewWithColor:[UIColor colorWithRed:0.102 green:0.636 blue:1.000 alpha:1.000]];
-    [self.view addSubview:_focusBox];
-    _exposureBox = [self viewWithColor:[UIColor colorWithRed:1.000 green:0.421 blue:0.054 alpha:1.000]];
-    [self.view addSubview:_exposureBox];
     [self detectCall];
     
     [self.mediaPlayer prepareToPlay];
-//    _doubleTapRecognizer =
-//    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
-//    _doubleTapRecognizer.numberOfTapsRequired = 2;
-//    [self.view addGestureRecognizer:_doubleTapRecognizer];
-    
-//    UIPinchGestureRecognizer *ping = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoom:)];
-//    [self.view addGestureRecognizer:ping];
+
 }
 
-//- (void)zoom:(UIPinchGestureRecognizer *)ping{
-//    if (self.yfSession) {
-//        [self.yfSession.videoCamera SetVideoZoom:ping.scale];
-//    }
-//}
 
 - (void)detectCall{
     
@@ -200,91 +182,6 @@ static const NSString *THCameraAdjustingExposureContext;
     };
 }
 
-- (UIView *)viewWithColor:(UIColor *)color {
-    UIView *view = [[UIView alloc] initWithFrame:BOX_BOUNDS];
-    view.backgroundColor = [UIColor clearColor];
-    view.layer.borderColor = color.CGColor;
-    view.layer.borderWidth = 5.0f;
-    view.hidden = YES;
-    return view;
-}
-
-- (void)handleDoubleTap:(UIGestureRecognizer *)recognizer {
-    CGPoint point = [recognizer locationInView:self.view];
-    [self runBoxAnimationOnView:self.exposureBox point:point];
-    
-    CGPoint pointOfInterest = CGPointZero;
-    CGSize frameSize = self.view.bounds.size;
-    pointOfInterest = CGPointMake(point.y / frameSize.height, 1.f - (point.x / frameSize.width));
-    
-    [self exposeAtPoint:pointOfInterest];
-}
-
-- (void)exposeAtPoint:(CGPoint)point {
-    /*
-    AVCaptureDevice *device = self.yfSession.metalCamera.inputCamera;
-    
-    AVCaptureExposureMode exposureMode =
-    AVCaptureExposureModeContinuousAutoExposure;
-    
-    if (device.isExposurePointOfInterestSupported &&                        // 2
-        [device isExposureModeSupported:exposureMode]) {
-        
-        NSError *error;
-        if ([device lockForConfiguration:&error]) {                         // 3
-            
-            device.exposurePointOfInterest = point;
-            device.exposureMode = exposureMode;
-            
-            if ([device isExposureModeSupported:AVCaptureExposureModeLocked]) {
-                [device addObserver:self                                    // 4
-                         forKeyPath:@"adjustingExposure"
-                            options:NSKeyValueObservingOptionNew
-                            context:&THCameraAdjustingExposureContext];
-            }
-            
-            [device unlockForConfiguration];
-        } else {
-            
-        }
-    }*/
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-    /*
-    if (context == &THCameraAdjustingExposureContext) {                     // 5
-        
-        AVCaptureDevice *device = (AVCaptureDevice *)object;
-        
-        if (!device.isAdjustingExposure &&                                  // 6
-            [device isExposureModeSupported:AVCaptureExposureModeLocked]) {
-            
-            [object removeObserver:self                                     // 7
-                        forKeyPath:@"adjustingExposure"
-                           context:&THCameraAdjustingExposureContext];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{                    // 8
-                NSError *error;
-                if ([device lockForConfiguration:&error]) {
-                    device.exposureMode = AVCaptureExposureModeLocked;
-                    [device unlockForConfiguration];
-                } else {
-                    
-                }
-            });
-        }
-        
-    } else {
-        [super observeValueForKeyPath:keyPath
-                             ofObject:object
-                               change:change
-                              context:context];
-    }*/
-}
-
 - (BOOL)prefersStatusBarHidden{
     return YES;
 }
@@ -300,6 +197,7 @@ static const NSString *THCameraAdjustingExposureContext;
         [self.yfSession.metalCamera resumeCamera];
     }
 }
+
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
 }
@@ -323,17 +221,10 @@ static const NSString *THCameraAdjustingExposureContext;
         NSLog(@"audioPts=%f",audioPts);
         [self.seekArr addObject:@(audioPts)];
         
-        //保存该段录制的秒数
-        [self.ptsArray addObject:@(self.yfSession.currentDts)];
-        //self.savePts += self.yfSession.currentDts;
-        
         [self removeDispalyLink];
         //    [self.mediaPlayer setMuted:YES];
         [self.mediaPlayer pause];
         [self.yfSession pauseRecord];
-        
-        //保存暂停时的秒数和当时的速率(添加缩略图时使用)
-        [self.recordTimeArr addObject:@[@((int)self.index),@(self.drawRate)]];
         
         CGFloat width = [UIScreen mainScreen].bounds.size.width;
         //添加进数组
@@ -362,6 +253,20 @@ static const NSString *THCameraAdjustingExposureContext;
     }
 
 }
+
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//
+//    [self.mediaPlayer shutdown];
+//    _mediaPlayer = nil;
+//
+//    NSURL *url = [[NSBundle mainBundle] URLForResource:@"creep.mp3" withExtension:nil];
+//    _mediaPlayer = [[YfFFMoviePlayerController alloc] initWithContentURL:url withOptions:nil useDns:NO useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0 display:NO isOpenSoundTouch:YES];
+//    _mediaPlayer.delegate = self;
+//    [_mediaPlayer prepareToPlay];
+//    _mediaPlayer.shouldAutoplay = NO;
+//
+//}
+
 //判断view是否正在显示
 -(BOOL)isCurrentViewControllerVisible:(UIViewController *)viewController
 {
@@ -463,7 +368,6 @@ static const NSString *THCameraAdjustingExposureContext;
             //[self.fileNameArr addObject:@(self.saveIndex)];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.sucessLabel.text = @"录制开始";
-                
             });
             [self.mediaPlayer play];
             
@@ -473,7 +377,6 @@ static const NSString *THCameraAdjustingExposureContext;
             _rtmpSessionState = YfSessionStateEnded;
         }
             break;
-            break;
         default:
             break;
     }
@@ -482,7 +385,7 @@ static const NSString *THCameraAdjustingExposureContext;
 //播放
 - (void)didClickPlay:(UIButton *)sender{
     [self hiddenAllSubView];
-    if ((int)self.index == Time) {
+    if ((int)self.index >= Time) {
         sender.backgroundColor = [UIColor redColor];
         return;
     }
@@ -494,6 +397,7 @@ static const NSString *THCameraAdjustingExposureContext;
         self.isFirst = NO;
         
         NSString *filePath = [self getDocumentsPath];
+        
         filePath = [filePath stringByAppendingPathComponent:@"music.mp4"];
         
         [self getDisplayLink];
@@ -541,9 +445,10 @@ static const NSString *THCameraAdjustingExposureContext;
 - (void)didClickStop:(UIButton *)sender{
     
     [self displayAllSubView];
-    
-    if ((int)self.index == Time) {
+    NSLog(@"self.index = %f",self.index);
+    if ((int)self.index >= Time) {
         sender.backgroundColor = [UIColor clearColor];
+        NSLog(@"超出时长￥￥￥￥");
         return;
     }
     
@@ -552,17 +457,10 @@ static const NSString *THCameraAdjustingExposureContext;
     double audioPts =  [[[NSUserDefaults standardUserDefaults] objectForKey:@"aduioPTSCallBack"] doubleValue];
     [self.seekArr addObject:@(audioPts)];
     
-    //保存该段录制的秒数
-    [self.ptsArray addObject:@(self.yfSession.currentDts)];
-    //self.savePts += self.yfSession.currentDts;
-    
     [self removeDispalyLink];
     //    [self.mediaPlayer setMuted:YES];
     [self.mediaPlayer pause];
     [self.yfSession pauseRecord];
-    
-    //保存暂停时的秒数和当时的速率(添加缩略图时使用)
-    [self.recordTimeArr addObject:@[@((int)self.index),@(self.drawRate)]];
     
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     //添加进数组
@@ -590,17 +488,10 @@ static const NSString *THCameraAdjustingExposureContext;
         double audioPts =  [[[NSUserDefaults standardUserDefaults] objectForKey:@"aduioPTSCallBack"] doubleValue];
         [self.seekArr addObject:@(audioPts)];
         
-        //保存该段录制的秒数
-        [self.ptsArray addObject:@(self.yfSession.currentDts)];
-        //self.savePts += self.yfSession.currentDts;
-        
         [self removeDispalyLink];
         //    [self.mediaPlayer setMuted:YES];
         [self.mediaPlayer pause];
         [self.yfSession pauseRecord];
-        
-        //保存暂停时的秒数和当时的速率(添加缩略图时使用)
-        [self.recordTimeArr addObject:@[@((int)self.index),@(self.drawRate)]];
         
         CGFloat width = [UIScreen mainScreen].bounds.size.width;
         //添加进数组
@@ -676,15 +567,6 @@ static const NSString *THCameraAdjustingExposureContext;
     
     self.isDelete = YES;
     
-    double value = [[self.ptsArray lastObject] doubleValue];
-    //self.savePts -= value;
-    if (value == 0) {
-        //self.savePts = 0;
-    }
-    
-    
-    [self.ptsArray removeLastObject];
-    
     [self.seekArr removeLastObject];
    
     //UI
@@ -708,85 +590,6 @@ static const NSString *THCameraAdjustingExposureContext;
 //    NSString *path = [self getDocumentsPath];
 //    path = [path stringByAppendingPathComponent:@"/reverse.mp4"];
 //    UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(splitVideo:didFinishSavingWithError:contextInfo:), nil);
-}
-
-//添加缩略图(该段弃用，仅供参考)
-- (void)addThumbnail{
-    NSString *path = [self getJpgDocumentsPath];
-    self.clickLeft.hidden = NO;
-    self.clickRight.hidden = NO;
-    //录制时长
-    int recordSecond = (int)self.index;
-    
-    CGFloat viewW = [UIScreen mainScreen].bounds.size.width/recordSecond;
-    CGFloat height = viewW * 16/9;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        //暂停次数
-        int pauseCount = (int)self.recordTimeArr.count;
-        
-        for (int i = 0; i < pauseCount; ++i) {
-            
-            NSArray *arr = (NSArray *)self.recordTimeArr[i];
-            
-            int temp = 0;
-            if (i == 0) {
-                temp = 0;
-            }else{
-                NSArray *tempArr = (NSArray *)self.recordTimeArr[i-1];
-                temp = [tempArr[0] intValue];
-            }
-            float drawRate = 1/[arr[1] floatValue];
-            int tempNum = 0;
-            for (int j = temp; j < [arr[0] intValue]; ++j) {
-                NSString *path2 = nil;
-                if (drawRate > 1) {
-                    //慢播快录
-                    tempNum += 1;
-                    if(j == 0){
-                        path2 = [NSString stringWithFormat:@"%@/%d.jpg",path,1];
-                    }else{
-                        BOOL res = [self checkPictureExist:(int)(j+tempNum * (drawRate-1))];
-                        if(!res){
-                            continue ;
-                        }
-                        path2 = [NSString stringWithFormat:@"%@/%d.jpg",path,(int)(j+tempNum * (drawRate-1))];
-                    }
-                }else if(drawRate == 1){
-                    //正常
-                    BOOL res = [self checkPictureExist:(int)(j+drawRate)];
-                    if(!res){
-                        continue ;
-                    }
-                    path2 = [NSString stringWithFormat:@"%@/%d.jpg",path,(int)(j+drawRate)];
-                }else{
-                    //快播慢录
-//                    float temp2 = [arr[1] floatValue];
-                    if (j == 0) {
-                        path2 = [NSString stringWithFormat:@"%@/%d.jpg",path,1];
-                    }else{
-                        BOOL res = [self checkPictureExist:j];
-                        if(!res){
-                            continue ;
-                        }
-                        path2 = [NSString stringWithFormat:@"%@/%d.jpg",path,j];
-                    }
-                }
-                
-                YFButton *btn = [[YFButton alloc] init];
-                UIImage *img = [UIImage imageWithContentsOfFile:path2];
-                [btn setBackgroundImage:img forState:UIControlStateNormal];
-                [btn addTarget:self action:@selector(didClickThumBtn:) forControlEvents:UIControlEventTouchUpInside];
-                
-                btn.tag = j+1;
-                [self.thumPathArr addObject:@[@(btn.tag),path2]];
-                
-                btn.frame = CGRectMake(j*viewW, 0, viewW, height);
-                [self.displayView addSubview:btn];
-            }
-        }
-    });
 }
 
 //检查图片是否存在
@@ -839,33 +642,6 @@ static const NSString *THCameraAdjustingExposureContext;
     }
 }
 
-- (void)didClickThumBtn:(YFButton *)sender{
-    
-    __block NSString *str = [self getJpgDocumentsPath];
-    
-    [self.thumPathArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj[0] intValue] == sender.tag) {
-            str = (NSString *)obj[1];
-            * stop = YES;
-        }
-    }];
-    
-    //录制时长
-    int recordSecond = (int)self.index;
-    
-    if (sender.tag <= recordSecond/2) {
-        self.leftValue = (int)sender.tag-1;
-        self.clickLeft.text = [NSString stringWithFormat:@"%lds",(long)sender.tag-1];
-        self.showImgView1.image = [UIImage imageWithContentsOfFile:str];
-
-    }else{
-        self.rightValue = (int)sender.tag;
-        self.clickRight.text = [NSString stringWithFormat:@"%lds",(long)sender.tag];
-        self.showImgView2.image = [UIImage imageWithContentsOfFile:str];
-
-    }
-}
-
 //保存
 //合成视频
 - (void)saveVideo:(UIButton *)sender{
@@ -881,57 +657,63 @@ static const NSString *THCameraAdjustingExposureContext;
     }
     
     //合成视频
-    [self.yfSession MediaConcatTaskId:20];
+    [self.yfSession MediaConcatTaskId:20 isAudioOpen:NO];
     sender.userInteractionEnabled = NO;
     //UI
     self.displayView.hidden = NO;
     self.showView.hidden = NO;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    /*UITouch *touch = [touches anyObject];
-    CGPoint point = [touch locationInView:self.view];
-    [self runBoxAnimationOnView:self.focusBox point:point];
-    CGPoint pointOfInterest = CGPointZero;
-    CGSize frameSize = self.view.bounds.size;
-    pointOfInterest = CGPointMake(point.y / frameSize.height, 1.f - (point.x / frameSize.width));
-    AVCaptureDevice *device = self.yfSession.videoCamera.inputCamera;
-    if (device.isFocusPointOfInterestSupported &&                           // 3
-        [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-        NSError *error;
-        if ([device lockForConfiguration:&error]) {                         // 4
-            device.focusPointOfInterest = pointOfInterest;
-            device.focusMode = AVCaptureFocusModeAutoFocus;
-            [device unlockForConfiguration];
-        } else {
-            
-            NSLog(@"不支持对焦");
-        }
-    }*/
-}
-
-- (void)runBoxAnimationOnView:(UIView *)view point:(CGPoint)point {
-    view.center = point;
-    view.hidden = NO;
-    [UIView animateWithDuration:0.15f
-                          delay:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         view.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0);
-                     }
-                     completion:^(BOOL complete) {
-                         double delayInSeconds = 0.5f;
-                         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                             view.hidden = YES;
-                             view.transform = CGAffineTransformIdentity;
-                         });
-                     }];
-}
-
-
 - (void)didClickReversal:(UIButton *)sender{
     
+}
+
+- (void)didClickAlbumBtn:(UIButton *)sender{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    NSArray *arr2 = [NSArray arrayWithObjects:(NSString *)kUTTypeMovie,(NSString *)kUTTypeQuickTimeMovie, nil];
+    picker.mediaTypes = arr2;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+    NSURL *url = info[UIImagePickerControllerMediaURL];
+    NSString *path = [url path];
+    NSLog(@"%@",path);
+    if(![path hasPrefix:@"/private"]){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self popMessageView:@"请选择系统相机拍摄的视频"];
+        });
+        [picker dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+    if (url) {
+        //跳转到裁剪页面
+        NSLog(@"select URL = %@",url);
+        __weak typeof(self)weakSelf = self;
+        NSString *detPath = [[self getDocumentsPath] stringByAppendingString:@"/musicMux.mp4"];
+        [YfSession photoVideoTransformToDocumentsVideoWithAssetURL:url outputFilePath:detPath Result:^(NSError *error, NSString *outputFile) {
+            if (error) {
+                NSLog(@"失败%@",error);
+            }else{
+                NSLog(@"成功%@",outputFile);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    YFSplitViewController *split = [[YFSplitViewController alloc] init];
+                    split.yfSession = weakSelf.yfSession;
+                    [weakSelf.yfSession.metalCamera removeLogo];
+                    [weakSelf.yfSession.metalCamera pauseCamera];
+                    [weakSelf.navigationController pushViewController:split animated:YES];
+                });
+            }
+        }];
+        
+    }
+    
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 //保存视频回调
@@ -1043,7 +825,7 @@ static const NSString *THCameraAdjustingExposureContext;
 - (void)setUpSubView{
     __weak typeof(self)weakSelf = self;
     [self.exitShake mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.view).offset(20);
+        make.top.equalTo(weakSelf.view).offset(ProgressTopHeight+20);
         make.left.equalTo(weakSelf.view).offset(10);
         make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
@@ -1067,7 +849,7 @@ static const NSString *THCameraAdjustingExposureContext;
     }];
     
     [self.progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.view).offset(ProgressTopHeight);
         make.left.equalTo(weakSelf.view);
         make.right.equalTo(weakSelf.view);
         make.height.mas_equalTo(10);
@@ -1178,6 +960,13 @@ static const NSString *THCameraAdjustingExposureContext;
         make.height.mas_equalTo(180);
     }];
     
+    [self.albumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.right.equalTo(weakSelf.view).offset(-10);
+        make.top.equalTo(weakSelf.arBtn.mas_bottom).offset(20);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
+    }];
+    
 }
 
 //裁剪音乐
@@ -1190,39 +979,19 @@ static const NSString *THCameraAdjustingExposureContext;
         sender.selected = YES;
         self.splitMusic.hidden = NO;
     }
-    
 }
 
 - (void)switchCameraState:(UIButton *)sender{
-    if (sender.selected) {
-        sender.selected = NO;
-        self.yfSession.cameraState = YfCameraStateFront;
-//        self.yfSession.beautyType = YfSessionCameraBeautifulFilterLocalSkinBeauty;
-//        [self.yfSession.videoCamera adjustRuddiness:0.125];
-//        [self.yfSession.videoCamera adjustBlurness:3.65];
-    }else{
-        sender.selected = YES;
-        self.yfSession.cameraState = YfCameraStateBack;
-//        self.yfSession.beautyType = YfSessionCameraBeautifulFilterGlobalBeauty;
-//        [self.yfSession.videoCamera setRouGuangLevel:0];
-//        [self.yfSession.videoCamera setBlurLevel:0.95];
-//        [self.yfSession.videoCamera setSharpnessLevel:0.25];
+    if (self.yfSession) {
+        [self.yfSession.metalCamera rotateCamera];
     }
-}
-
-//聚焦
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-
-//    if (self.yfSession) {
-//        UITouch *touch = [touches anyObject];
-//        CGPoint point = [touch locationInView:self.view];
-//        
-//        CGPoint pointOfInterest = CGPointZero;
-//        CGSize frameSize = self.view.bounds.size;
-//        pointOfInterest = CGPointMake(point.y / frameSize.height, 1.f - (point.x / frameSize.width));
-//        
-//        [self.yfSession focusAtPoint:pointOfInterest];
-//    }
+//    self.mediaObj = [[YFMediaEditObj alloc] init];
+//    
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"timg.jpeg" ofType:nil];
+//    NSString *input = [[NSBundle mainBundle] pathForResource:@"music1.mp4" ofType:nil];
+//    NSString *output = [[self getDocumentsPath] stringByAppendingString:@"/TTTT.mp4"];
+//
+//    [self.mediaObj localMediaFileAddWaterMarkWithImagePath:path AndRect:CGRectMake(200, 200, 120, 40) AndInputFile:input outputFile:output BitRate:0 Rate:0 taskId:13];
 }
 
 - (void)didClickInsBtn:(UIButton *)sender{
@@ -1328,7 +1097,7 @@ static const NSString *THCameraAdjustingExposureContext;
     return _pathData;
 }
 
-- (UIButton *)play{
+- (YFDrawButton *)play{
     if (!_play) {
         _play = [[YFDrawButton alloc] init];
 //        [_play setTitle:@"长按" forState:UIControlStateNormal];
@@ -1348,9 +1117,10 @@ static const NSString *THCameraAdjustingExposureContext;
 
         NSURL *url = [[NSBundle mainBundle] URLForResource:self.musicName withExtension:nil];
         
-        _mediaPlayer = [[YfFFMoviePlayerController alloc] initWithContentURL:url withOptions:nil useDns:YES useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0 display:NO isOpenSoundTouch:YES];
+        _mediaPlayer = [[YfFFMoviePlayerController alloc] initWithContentURL:url withOptions:nil useDns:NO useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0 display:NO isOpenSoundTouch:YES];
         _mediaPlayer.delegate = self;
         _mediaPlayer.shouldAutoplay = NO;
+//        _mediaPlayer.playbackVolume = 0;
     }
     return _mediaPlayer;
 }
@@ -1462,20 +1232,6 @@ static const NSString *THCameraAdjustingExposureContext;
     return _rightLabel;
 }
 
-- (NSMutableArray *)recordTimeArr{
-    if (!_recordTimeArr) {
-        _recordTimeArr = [NSMutableArray array];
-    }
-    return _recordTimeArr;
-}
-
-- (NSMutableArray *)thumPathArr{
-    if (!_thumPathArr) {
-        _thumPathArr = [NSMutableArray array];
-    }
-    return _thumPathArr;
-}
-
 - (UILabel *)clickLeft{
     if (!_clickLeft) {
         _clickLeft = [[UILabel alloc] init];
@@ -1484,6 +1240,18 @@ static const NSString *THCameraAdjustingExposureContext;
         [self.view addSubview:_clickLeft];
     }
     return _clickLeft;
+}
+
+- (UIButton *)albumBtn{
+    if (!_albumBtn) {
+        _albumBtn = [[UIButton alloc] init];
+        [_albumBtn setBackgroundImage:[UIImage imageNamed:@"lubo1"] forState:UIControlStateNormal];
+        [_albumBtn setBackgroundImage:[UIImage imageNamed:@"lubo2"] forState:UIControlStateHighlighted];
+        [_albumBtn addTarget:self action:@selector(didClickAlbumBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_albumBtn];
+        
+    }
+    return _albumBtn;
 }
 
 - (UILabel *)clickRight{
@@ -1548,20 +1316,13 @@ static const NSString *THCameraAdjustingExposureContext;
     return _testBtn;
 }
 
-- (NSMutableArray *)ptsArray{
-    if (!_ptsArray) {
-        _ptsArray = [NSMutableArray array];
-    }
-    return _ptsArray;
-}
-
 - (NSArray *)bundleArr{
     if (!_bundleArr) {
         _bundleArr = @[@"PrincessCrown.bundle",@"BeagleDog.bundle",@"YellowEar.bundle",@"Deer.bundle",@"HappyRabbi.bundle",@"hartshorn.bundle",@"Mood.bundle",];
     }
     return _bundleArr;
 }
-#warning 滤镜
+
 - (YFInsFilterView *)filterView{
     if (!_filterView) {
         _filterView = [[YFInsFilterView alloc] init];
@@ -1572,7 +1333,7 @@ static const NSString *THCameraAdjustingExposureContext;
         
         _filterView.callBack = ^(int i){
             //切换滤镜
-//            [weakSelf.yfSession.metalCamera switchFilter:i];
+            [weakSelf.yfSession.metalCamera switchVisualFilter:(YfMCameraVisualFilter)i];
         };
         
         _filterView.hidden = YES;
@@ -1587,19 +1348,7 @@ static const NSString *THCameraAdjustingExposureContext;
         __weak typeof(self)weakSelf = self;
         _arView = [[YFARView alloc] init];
         _arView.callBack = ^(int i){
-            if ([YfMFaceUSession sharedManager].open == NO) {
-                [YfMFaceUSession sharedManager].open = YES;
-            }
-            //ar动画回调
-            if (i == 0) {
-                //标识没有ar动画
-                [YfMFaceUSession sharedManager].isOnlyBeauty = YES;
-            }else{
-                //加载ar动画
-                [YfMFaceUSession sharedManager].isOnlyBeauty = NO;
-                NSString *path = [[NSBundle mainBundle] pathForResource:weakSelf.bundleArr[i-1] ofType:nil];
-                [[YfMFaceUSession sharedManager] reLoadItem:path];
-            }
+
         };
         _arView.cancel = ^(){
             weakSelf.arView.hidden = YES;
@@ -1643,18 +1392,10 @@ static const NSString *THCameraAdjustingExposureContext;
             size = CGSizeMake(360, 640);
         }
         
-        _yfSession = [[YfSession alloc] initWithVideoSize:size sessionPreset:AVCaptureSessionPresetiFrame960x540 frameRate:25 bitrate:4000*1000 bufferTime:2 isUseUDP:YfTransportNone isDropFrame:NO YfOutPutImageOrientation:YfOutPutImageOrientationNormal isOnlyAudioPushBuffer:NO audioRecoderError:nil isOpenAdaptBitrate:NO];
+        _yfSession = [[YfSession alloc] initWithVideoSize:size sessionPreset:AVCaptureSessionPresetiFrame960x540 frameRate:25 bitrate:2000*1000 bufferTime:2 isUseUDP:YfTransportNone isDropFrame:NO YfOutPutImageOrientation:YfOutPutImageOrientationNormal isOnlyAudioPushBuffer:NO audioRecoderError:nil isOpenAdaptBitrate:NO];
         [self.view insertSubview:_yfSession.previewView atIndex:0];
-        YfMFaceUSession *manager = [YfMFaceUSession sharedManager];
-        
-        manager.open = NO;
-        manager.heartName = @"heart_iloveu.bundle";
-        
-        manager.is_facing_tracking = YES;
-        
-        manager.isOnlyBeauty = YES;
-        manager.beautyLever = 0;
-        manager.colorLever = 0;
+        //原声录制使用YES，合成MP3使用NO
+		_yfSession.IsAudioOpen = NO;
   
 //        NSString *file = [[NSBundle mainBundle] pathForResource:@"water" ofType:@"gif"];
 //        [_yfSession.videoCamera decodeAndRenderWithFilePath:file];
@@ -1716,9 +1457,7 @@ static const NSString *THCameraAdjustingExposureContext;
                             
                             [weakSelf.navigationController pushViewController:split animated:YES];
                             
-                            
                         });
-                        
                     }
                     
                     if (taskId == 40) {
@@ -1748,6 +1487,12 @@ static const NSString *THCameraAdjustingExposureContext;
                     }
                     if (taskId == 33) {
                         NSLog(@"合成片尾成功");
+                    }
+                    if (taskId == 13) {
+                        NSLog(@"添加水印成功");
+                    }
+                    if (taskId == 1) {
+                        NSLog(@"原声转码成功");
                     }
                     
                 }else{
@@ -1798,13 +1543,10 @@ static const NSString *THCameraAdjustingExposureContext;
             //处理UI
             [weakSelf popMessageView:@"该段录制失败"];
             //保存处理
-            [weakSelf.recordTimeArr removeLastObject];
             weakSelf.isDelete = YES;
             
             [weakSelf.seekArr removeLastObject];
             NSLog(@"录制失败");
-            //处理视频进度
-            [weakSelf.ptsArray removeLastObject];
             
             //处理UI
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -1819,9 +1561,9 @@ static const NSString *THCameraAdjustingExposureContext;
             
         };
 
-        NSString *png = [[NSBundle mainBundle] pathForResource:@"shuiyin5" ofType:@"png"];
+        NSString *png = [[NSBundle mainBundle] pathForResource:@"zly2" ofType:@"png"];
 //        [_yfSession.metalCamera drawImageTexture:png PointSize:YfSessionCameraLogoPostitionrightUp];
-        [_yfSession.metalCamera drawImageTexture:png PointRect:CGRectMake(10, 10, 80, 80)];
+        [_yfSession.metalCamera drawImageTexture:png PointRect:CGRectMake(10, 10, 175, 74)];
     }
     return _yfSession;
 }
@@ -1835,6 +1577,7 @@ static const NSString *THCameraAdjustingExposureContext;
     
     [self.yfSession.metalCamera resumeCamera];
 //    [self.yfSession.metalCamera switchFilter:YFINSTCamera_NORMAL_FILTER];
+    
 }
 
 @end

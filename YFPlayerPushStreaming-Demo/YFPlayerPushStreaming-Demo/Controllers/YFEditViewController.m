@@ -28,6 +28,7 @@
 #import <sys/time.h>
 #import "NSObject+Time.h"
 #import "YFSpecialFilterView.h"
+#import "YFDefine.h"
 struct timeval record;
 
 @interface YFEditViewController ()<YfFFMoviePlayerControllerDelegate,YfFileProcessManagerDelegate,YfsessionPreViewDelegate,NSURLSessionTaskDelegate>
@@ -151,7 +152,7 @@ struct timeval record;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [YfMFaceUSession sharedManager].open = YES;
+
     self.view.backgroundColor = [UIColor blackColor];
     self.configManager.UseAble = NO;
     self.uploadCount = 5;
@@ -232,7 +233,6 @@ struct timeval record;
         [self saveConfigVideo:nil];
     }
     
-    [YfMFaceUSession sharedManager].isOnlyBeauty = YES;
     self.isPlayEnd = YES;
 //    self.mediaPlayer.currentPlaybackTime = 0;
 //    [self.mediaPlayer play];
@@ -273,11 +273,9 @@ struct timeval record;
 - (void)setUpSubView{
     
     __weak typeof(self)weakSelf = self;
-    CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    
     [self.exitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view).offset(10);
-        make.top.equalTo(weakSelf.view).offset(10);
+        make.top.equalTo(weakSelf.view).offset(ProgressTopHeight+10);
         make.size.mas_equalTo(CGSizeMake(47, 47));
     }];
     
@@ -314,9 +312,15 @@ struct timeval record;
         make.size.mas_equalTo(CGSizeMake(80, 40));
     }];
     
+    [self.uploadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.view).offset(10);
+        make.top.equalTo(weakSelf.exitBtn.mas_bottom).offset(20);
+        make.size.mas_equalTo(CGSizeMake(47, 47));
+    }];
+    
     [self.ActionConfig mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view).offset(10);
-        make.top.equalTo(weakSelf.view).offset(177);
+        make.top.equalTo(weakSelf.uploadBtn.mas_bottom).offset(20);
         make.size.mas_equalTo(CGSizeMake(47, 47));
     }];
     
@@ -327,33 +331,27 @@ struct timeval record;
         make.height.mas_equalTo(30);
     }];
     
-    [self.uploadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.view).offset(10);
-        make.top.equalTo(weakSelf.view).offset(90);
-        make.size.mas_equalTo(CGSizeMake(47, 47));
-    }];
-    
     [self.editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.view).offset(-10);
-        make.top.equalTo(weakSelf.view).offset(20);
+        make.top.equalTo(weakSelf.view).offset(ProgressTopHeight+5);
         make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
     
     [self.revoke mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view).offset(10);
-        make.top.equalTo(weakSelf.view).offset(260);
+        make.top.equalTo(weakSelf.ActionConfig.mas_bottom).offset(20);
         make.size.mas_equalTo(CGSizeMake(47, 47));
     }];
     
     [self.editTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.view).offset(-10);
         make.top.equalTo(weakSelf.editBtn.mas_bottom).offset(5);
-        make.size.mas_equalTo(CGSizeMake(80, 20));
+        make.size.mas_equalTo(CGSizeMake(40, 20));
     }];
     
     [self.categoryView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.view).offset(-10);
-        make.top.equalTo(weakSelf.view).offset(100);
+        make.top.equalTo(weakSelf.editTitle.mas_bottom).offset(20);
         make.size.mas_equalTo(CGSizeMake(40, 280));
     }];
     
@@ -549,6 +547,7 @@ struct timeval record;
 //清除资源
 - (void)exitVC:(UIButton *)sender{
     
+    
     [self.hud hide:YES];
     
     if (_mediaPlayer) {
@@ -574,9 +573,8 @@ struct timeval record;
     [self.configManager clean];
 
     [self.fileProcess clean];
-    self.fileProcess = nil;
+    _fileProcess = nil;
     
-    [YfMFaceUSession sharedManager].open = NO;
     
     if (_editPreview) {
         [_editPreview resetConfigure];
@@ -852,7 +850,7 @@ struct timeval record;
     
     __weak typeof(self)weakSelf = self;
     //设置代理
-    [[[AFHTTPSessionManager manager]uploadTaskWithRequest:request fromFile:fileURL progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[[AFHTTPSessionManager manager] uploadTaskWithRequest:request fromFile:fileURL progress:^(NSProgress * _Nonnull uploadProgress) {
         
         float progress = (float)uploadProgress.completedUnitCount/uploadProgress.totalUnitCount;
         
@@ -1020,7 +1018,7 @@ struct timeval record;
 //相机美颜处理后的数据
 - (void)willoutputpixelbuffer:(CVPixelBufferRef)PixelBuffer pts:(int64_t)pts{
     if (self.isWriting) {
-        NSLog(@"%lld",pts);
+//        NSLog(@"%lld",pts);
         [self.fileProcess EnQueueBuffer:PixelBuffer pts:pts];
     }
 }
@@ -1070,10 +1068,10 @@ struct timeval record;
     });
 }
 
-
 - (void)willOutputPlayerRenderbuffer:(CVPixelBufferRef)renderbuffer player:(YfFFMoviePlayerController *)player{
     
     double pts = [[[NSUserDefaults standardUserDefaults] objectForKey:@"videoPtsCallBack"] doubleValue];
+    
     if (_editPreview) {
         [_editPreview receiveYUVTextureBuffer:renderbuffer pts:pts * 1000];
     }
@@ -1081,6 +1079,7 @@ struct timeval record;
 
 //fileManager输出软解码视频数据 =>> 保存文件
 - (void)willOutPutYUVTexture:(void*)yData U:(void*)uData V:(void*)vData Ysize:(size_t)Ysize Usize:(size_t)Usize Vsize:(size_t)Vsize  videoSize:(CGSize)videoSize pts:(int64_t)pts{
+    
     //相机接收数据
     [self.editPreview receiveYUVTextureY:yData U:uData V:vData Ysize:CGSizeMake(Ysize, videoSize.height) Usize:CGSizeMake(Usize, videoSize.height/2.0) Vsize:CGSizeMake(Vsize, videoSize.height/2.0) videoSize:(CGSize)videoSize pts:pts];
 }
@@ -1105,13 +1104,13 @@ struct timeval record;
         if (self.isSlow) {
             self.isShow = NO;
             self.mediaPlayer.currentPlaybackTime = self.mediaPlayer.duration/2;
-            [self.mediaPlayer slow_video:self.mediaPlayer.duration/2+0.5];
+            [self.mediaPlayer slow_video:self.mediaPlayer.duration/2+0.5 AndDuration:1.0 repeatCount:3];
             self.operationTime = self.mediaPlayer.duration/2+0.5;
         }
         if (self.isRepeat) {
             self.isRepeat = NO;
             self.mediaPlayer.currentPlaybackTime = self.mediaPlayer.duration/2;
-            [self.mediaPlayer repeat_video:self.mediaPlayer.duration/2+0.5];
+            [self.mediaPlayer repeat_video:self.mediaPlayer.duration/2+0.5 AndDuration:1.0 repeatCount:3];
             self.operationTime = self.mediaPlayer.duration/2+0.5;
         }
     }
@@ -1288,7 +1287,7 @@ struct timeval record;
             //添加起始用户操作配置
             [weakSelf addStartConfig];
             
-            if ([theme isEqualToString:@"黑魔法"]){
+            if ([theme isEqualToString:@"黑白"]){
                 
                 [weakSelf.editPreview setupFilter:YfSessionPreViewFilterSobelLine];
                 weakSelf.funcType = ActionSpecialFilter;
@@ -1302,13 +1301,13 @@ struct timeval record;
                 weakSelf.specialType = YfSessionCameraFilterSeparateRGB;
                 
                 weakSelf.paintView.myColor = [UIColor cyanColor];
-            }else if ([theme isEqualToString:@"old TV"]){
+            }else if ([theme isEqualToString:@"格纹"]){
                 [weakSelf.editPreview setupFilter:YfSessionPreViewFilterBlackColorTV];
                 weakSelf.funcType = ActionSpecialFilter;
                 weakSelf.specialType = YfSessionCameraFilterBlackColorTV;
                 
                 weakSelf.paintView.myColor = [UIColor purpleColor];
-            }else if ([theme isEqualToString:@"灵魂抖动"]){
+            }else if ([theme isEqualToString:@"灵魂出窍"]){
                 [weakSelf.editPreview useSoul:YES];
                 weakSelf.funcType = ActionAmazingFilter;
                 weakSelf.soulType = SoulShake;
@@ -1320,7 +1319,7 @@ struct timeval record;
                 weakSelf.specialType = YfSessionCameraFilterNineBoxFilterNormal;
                 
                 weakSelf.paintView.myColor = [UIColor magentaColor];
-            }else if ([theme isEqualToString:@"左右镜像"]){
+            }else if ([theme isEqualToString:@"镜像"]){
                 [weakSelf.editPreview switchMirrorFilter:YfPreViewMirrorFilterRightLeft];
                 weakSelf.funcType = ActionAmazingFilter;
                 weakSelf.soulType = MirrorLeftRight;
@@ -1351,22 +1350,22 @@ struct timeval record;
             [weakSelf saveConfigVideo:nil];
             weakSelf.funcType = ActionNone;
             
-            if ([theme isEqualToString:@"黑魔法"]){
+            if ([theme isEqualToString:@"黑白"]){
                 [weakSelf.editPreview setupFilter:YfSessionPreViewFilterDefault];
                 weakSelf.specialType = YfSessionCameraFilterNormal;
             }else if ([theme isEqualToString:@"抖动"]){
                 [weakSelf.editPreview setupFilter:YfSessionPreViewFilterDefault];
                 weakSelf.specialType = YfSessionCameraFilterNormal;
-            }else if ([theme isEqualToString:@"old TV"]){
+            }else if ([theme isEqualToString:@"格纹"]){
                 [weakSelf.editPreview setupFilter:YfSessionPreViewFilterDefault];
                 weakSelf.specialType = YfSessionCameraFilterNormal;
-            }else if ([theme isEqualToString:@"灵魂抖动"]){
+            }else if ([theme isEqualToString:@"灵魂出窍"]){
                 [weakSelf.editPreview useSoul:NO];
                 weakSelf.soulType = None;
             }else if ([theme isEqualToString:@"九宫格"]){
                 [weakSelf.editPreview setupFilter:YfSessionPreViewFilterDefault];
                 weakSelf.specialType = YfSessionCameraFilterNormal;
-            }else if ([theme isEqualToString:@"左右镜像"]){
+            }else if ([theme isEqualToString:@"镜像"]){
                 [weakSelf.editPreview switchMirrorFilter:YfPreViewMirrorFilterNone];
                 weakSelf.soulType = None;
             }
@@ -1402,7 +1401,7 @@ struct timeval record;
             
             //添加起始用户操作配置
             [weakSelf addStartConfig];
-            if([theme isEqualToString:@"🐔"]){
+            if([theme isEqualToString:@"�"]){
                 NSString *file = [[NSBundle mainBundle] pathForResource:@"0001" ofType:@"gif"];
                 [weakSelf.editPreview decodeAndRenderWithFilePath:file PointRect:CGRectMake(10, 10, 80, 80)];
                 
@@ -1410,7 +1409,7 @@ struct timeval record;
                 weakSelf.soulType = Gif;
                 weakSelf.texTureName = file;
                 weakSelf.paintView.myColor = [UIColor redColor];
-            }else if([theme isEqualToString:@"🐿"]){
+            }else if([theme isEqualToString:@"�"]){
                 NSString *file = [[NSBundle mainBundle] pathForResource:@"0002" ofType:@"gif"];
                 [weakSelf.editPreview decodeAndRenderWithFilePath:file PointRect:CGRectMake(10, 10, 80, 80)];
                 
@@ -1418,7 +1417,7 @@ struct timeval record;
                 weakSelf.soulType = Gif;
                 weakSelf.texTureName = file;
                 weakSelf.paintView.myColor = [UIColor blueColor];
-            }else if([theme isEqualToString:@"🐶"]){
+            }else if([theme isEqualToString:@"�"]){
                 NSString *file = [[NSBundle mainBundle] pathForResource:@"0003" ofType:@"gif"];
                 [weakSelf.editPreview decodeAndRenderWithFilePath:file PointRect:CGRectMake(10, 10, 80, 80)];
                 
@@ -1426,7 +1425,7 @@ struct timeval record;
                 weakSelf.soulType = Gif;
                 weakSelf.texTureName = file;
                 weakSelf.paintView.myColor = [UIColor whiteColor];
-            }else if([theme isEqualToString:@"🍉"]){
+            }else if([theme isEqualToString:@"�"]){
                 NSString *file = [[NSBundle mainBundle] pathForResource:@"0004" ofType:@"gif"];
                 [weakSelf.editPreview decodeAndRenderWithFilePath:file PointRect:CGRectMake(10, 10, 80, 80)];
                 
@@ -1459,20 +1458,20 @@ struct timeval record;
             [weakSelf saveConfigVideo:nil];
             weakSelf.funcType = ActionNone;
             
-            if([theme isEqualToString:@"🐔"]){
+            if([theme isEqualToString:@"�"]){
                 
                 [weakSelf.editPreview closeAndCleanGif];
                 weakSelf.texTureName = nil;
                 weakSelf.soulType = None;
-            }else if([theme isEqualToString:@"🐿"]){
+            }else if([theme isEqualToString:@"�"]){
                 [weakSelf.editPreview closeAndCleanGif];
                 weakSelf.texTureName = nil;
                 weakSelf.soulType = None;
-            }else if([theme isEqualToString:@"🐶"]){
+            }else if([theme isEqualToString:@"�"]){
                 [weakSelf.editPreview closeAndCleanGif];
                 weakSelf.texTureName = nil;
                 weakSelf.soulType = None;
-            }else if([theme isEqualToString:@"🍉"]){
+            }else if([theme isEqualToString:@"�"]){
                 [weakSelf.editPreview closeAndCleanGif];
                 weakSelf.texTureName = nil;
                 weakSelf.soulType = None;
@@ -1588,7 +1587,7 @@ struct timeval record;
                 if ([weakSelf.playURL containsString:@"splitVideo.mp4"]) {
                     
                     weakSelf.mediaPlayer.currentPlaybackTime = weakSelf.mediaPlayer.duration/2;
-                    [weakSelf.mediaPlayer slow_video:weakSelf.mediaPlayer.duration/2+0.5];
+                    [weakSelf.mediaPlayer slow_video:weakSelf.mediaPlayer.duration/2+0.5 AndDuration:1.0 repeatCount:3];
                      weakSelf.operationTime = weakSelf.mediaPlayer.duration/2+0.5;
                 }else{
                     weakSelf.isSlow = YES;
@@ -1597,14 +1596,14 @@ struct timeval record;
                     [weakSelf.mediaPlayer play:[NSURL fileURLWithPath:weakSelf.playURL] useDns:YES useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0];
                 }
                 
-            }else if([theme isEqualToString:@"重复"]){
+            }else if([theme isEqualToString:@"重复动作"]){
                 [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:@"reverseVideo"];
                 [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:@"repeatVideo"];
                 [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:@"slowVideo"];
                 if ([weakSelf.playURL containsString:@"splitVideo.mp4"]) {
                     
                     weakSelf.mediaPlayer.currentPlaybackTime = weakSelf.mediaPlayer.duration/2;
-                    [weakSelf.mediaPlayer repeat_video:weakSelf.mediaPlayer.duration/2+0.5];
+                    [weakSelf.mediaPlayer repeat_video:weakSelf.mediaPlayer.duration/2+0.5 AndDuration:1.0 repeatCount:3];
                     weakSelf.operationTime = weakSelf.mediaPlayer.duration/2+0.5;
                 }else{
                     weakSelf.isRepeat = YES;
@@ -1624,7 +1623,7 @@ struct timeval record;
 
 - (NSArray *)watermarkArr{
     if (!_watermarkArr) {
-        _watermarkArr = [NSArray arrayWithObjects:@{@"iconNomal":@"specialBlackWhite",@"iconSelected":@"specialBlackWhite",@"title":@"黑魔法"},@{@"iconNomal":@"specialShake",@"iconSelected":@"specialShake",@"title":@"抖动"},@{@"iconNomal":@"specialOld",@"iconSelected":@"specialOld",@"title":@"old TV"},@{@"iconNomal":@"specialSoul",@"iconSelected":@"specialSoul",@"title":@"灵魂抖动"},@{@"iconNomal":@"specialNine",@"iconSelected":@"specialNine",@"title":@"九宫格"},@{@"iconNomal":@"specialMirror",@"iconSelected":@"specialMirror",@"title":@"左右镜像"},   nil];
+        _watermarkArr = [NSArray arrayWithObjects:@{@"iconNomal":@"specialBlackWhite",@"iconSelected":@"specialBlackWhite",@"title":@"黑白"},@{@"iconNomal":@"specialShake",@"iconSelected":@"specialShake",@"title":@"抖动"},@{@"iconNomal":@"specialOld",@"iconSelected":@"specialOld",@"title":@"格纹"},@{@"iconNomal":@"specialSoul",@"iconSelected":@"specialSoul",@"title":@"灵魂出窍"},@{@"iconNomal":@"specialNine",@"iconSelected":@"specialNine",@"title":@"九宫格"},@{@"iconNomal":@"specialMirror",@"iconSelected":@"specialMirror",@"title":@"镜像"},   nil];
         NSMutableArray * arr2 = [NSMutableArray array];
         for (NSDictionary *dict in _watermarkArr) {
             YFFunModel *model = [YFFunModel funcModelWithDict:dict];
@@ -1638,7 +1637,7 @@ struct timeval record;
 
 - (NSArray *)gifArr{
     if (!_gifArr) {
-        _gifArr = [NSArray arrayWithObjects:@{@"iconNomal":@"beauty",@"iconSelected":@"beauty22",@"title":@"🐔"},@{@"iconNomal":@"beauty",@"iconSelected":@"beauty22",@"title":@"🐿"},@{@"iconNomal":@"beauty",@"iconSelected":@"beauty22",@"title":@"🐶"},@{@"iconNomal":@"beauty",@"iconSelected":@"beauty22",@"title":@"🍉"},   nil];
+        _gifArr = [NSArray arrayWithObjects:@{@"iconNomal":@"beauty",@"iconSelected":@"beauty22",@"title":@"�"},@{@"iconNomal":@"beauty",@"iconSelected":@"beauty22",@"title":@"�"},@{@"iconNomal":@"beauty",@"iconSelected":@"beauty22",@"title":@"�"},@{@"iconNomal":@"beauty",@"iconSelected":@"beauty22",@"title":@"�"},   nil];
         NSMutableArray * arr2 = [NSMutableArray array];
         for (NSDictionary *dict in _gifArr) {
             YFFunModel *model = [YFFunModel funcModelWithDict:dict];
@@ -1652,7 +1651,7 @@ struct timeval record;
 
 - (NSArray *)timeSpecialArr{
     if (!_timeSpecialArr) {
-        _timeSpecialArr = [NSArray arrayWithObjects:@{@"iconNomal":@"specialNone",@"iconSelected":@"specialNone",@"title":@"无"},@{@"iconNomal":@"specialTimeback",@"iconSelected":@"specialTimeback",@"title":@"时光倒流"},@{@"iconNomal":@"specialSlow",@"iconSelected":@"specialSlow",@"title":@"慢动作"},@{@"iconNomal":@"specialReuse",@"iconSelected":@"specialReuse",@"title":@"重复"},    nil];
+        _timeSpecialArr = [NSArray arrayWithObjects:@{@"iconNomal":@"specialNone",@"iconSelected":@"specialNone",@"title":@"无"},@{@"iconNomal":@"specialTimeback",@"iconSelected":@"specialTimeback",@"title":@"时光倒流"},@{@"iconNomal":@"specialSlow",@"iconSelected":@"specialSlow",@"title":@"慢动作"},@{@"iconNomal":@"specialReuse",@"iconSelected":@"specialReuse",@"title":@"重复动作"},    nil];
         NSMutableArray * arr2 = [NSMutableArray array];
         for (NSDictionary *dict in _timeSpecialArr) {
             YFFunModel *model = [YFFunModel funcModelWithDict:dict];
@@ -1694,7 +1693,8 @@ struct timeval record;
         _editTitle = [[UILabel alloc] init];
         _editTitle.text = @"编辑";
         _editTitle.textColor = [UIColor colorWithRed:0 green:228/255.0 blue:226/255.0 alpha:1];
-        _editTitle.textAlignment = NSTextAlignmentRight;
+        _editTitle.textAlignment = NSTextAlignmentCenter;
+        _editTitle.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:_editTitle];
     }
     return _editTitle;

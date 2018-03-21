@@ -9,6 +9,7 @@
 #import "YFStartViewController.h"
 #import "YFParamSetViewController.h"
 #import "Masonry.h"
+#import <YFMediaPlayerPushStreaming/YFMediaPlayerPushStreaming.h>
 @interface YFStartViewController ()
 
 @property (nonatomic, strong) UIButton *start;
@@ -25,6 +26,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self setUpSubView];
+    
 }
 
 - (void)setUpSubView{

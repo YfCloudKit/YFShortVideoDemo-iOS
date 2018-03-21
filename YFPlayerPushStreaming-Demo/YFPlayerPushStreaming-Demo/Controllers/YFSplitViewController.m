@@ -11,6 +11,7 @@
 #import <YfMediaPlayer/YfMediaPlayer.h>
 #import "Masonry.h"
 #import "YFSplitVideoView.h"
+#import "YFDefine.h"
 @interface YFSplitViewController ()<YfFFMoviePlayerControllerDelegate>
 
 @property (nonatomic, strong) YfFFMoviePlayerController *mediaPlayer;
@@ -85,6 +86,7 @@
     
     NSString *input = [self getDocumentsPath];
     input = [input stringByAppendingPathComponent:@"musicMux.mp4"];
+    
     NSString *dest = [self getJpgDocumentsPath];
     NSString *destPath = [dest stringByAppendingPathComponent:@"%d.jpg"];
     //获取缩略图
@@ -96,7 +98,7 @@
     
     [self.exit mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view).offset(10);
-        make.top.equalTo(weakSelf.view).offset(10);
+        make.top.equalTo(weakSelf.view).offset(ProgressTopHeight+10);
         make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
     
@@ -160,8 +162,9 @@
     NSString *path = [self getDocumentsPath];
     //裁剪
     NSString * input = [path stringByAppendingString:@"/musicMux.mp4"];
-    
-    [self.yfSession MediaSplitOutPutFile:[path stringByAppendingPathComponent:@"splitVideo.mp4"] AndInputFile:input startTime:self.leftValue endTime:self.rightValue taskId:40];
+    self.rightValue = 6;
+//    [self.yfSession MediaSplitOutPutFile:[path stringByAppendingPathComponent:@"splitVideo.mp4"] AndInputFile:input startTime:self.leftValue endTime:self.rightValue taskId:40];
+    [self.yfSession localVideoSplitVideo:input OutputFile:[path stringByAppendingPathComponent:@"splitVideo.mp4"] startTime:self.leftValue endTime:self.rightValue taskId:40];
 }
 
 - (void)playAndStop:(UIButton *)sender{
@@ -186,6 +189,10 @@
         [self.mediaPlayer play];
         self.playBtn.hidden = YES;
     }
+    
+    
+//    NSLog(@"%@",NSStringFromCGSize(self.mediaPlayer.naturalSize));
+    
 }
 
 //获取document路径
@@ -220,6 +227,7 @@
         
         _mediaPlayer = [[YfFFMoviePlayerController alloc] initWithContentURL:url withOptions:nil useDns:YES useSoftDecode:YES DNSIpCallBack:nil appID:"" refer:"" bufferTime:0 display:YES isOpenSoundTouch:YES];
         [_mediaPlayer prepareToPlay];
+        _mediaPlayer.scalingMode = YfMPMovieScalingModeAspectFill;
         _mediaPlayer.delegate = self;
         _mediaPlayer.shouldAutoplay = NO;
     }
